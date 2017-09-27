@@ -241,3 +241,15 @@ def get_plugins_config():
     if config.has_option("BOT", "plugins"):
         active_plugins = map(str.strip, config.get("BOT", "plugins").split(','))
     return active_plugins
+
+
+# gets the git commit count as version for master.
+def get_bot_version():
+    import subprocess
+    output = subprocess.check_output(["git", "rev-list","--count", "HEAD"])
+    try:
+        int(output)
+        return output
+    except ValueError:
+        return 'N/A'
+    pass
