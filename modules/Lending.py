@@ -58,14 +58,20 @@ def init(cfg, api1, log1, data, maxtolend, dry_run1, analysis, notify_conf1):
     global sleep_time, sleep_time_active, sleep_time_inactive, min_daily_rate, max_daily_rate, spread_lend, \
         gap_bottom_default, gap_top_default, xday_threshold, xday_spread, xdays, min_loan_size, end_date, coin_cfg, \
         min_loan_sizes, dry_run, transferable_currencies, keep_stuck_orders, hide_coins, scheduler, gap_mode_default, \
-        exchange, analysis_method, currencies_to_analyse 
+        exchange, analysis_method, currencies_to_analyse
 
     exchange = Config.get_exchange()
 
     sleep_time_active = float(Config.get("BOT", "sleeptimeactive", None, 1, 3600))
     sleep_time_inactive = float(Config.get("BOT", "sleeptimeinactive", None, 1, 3600))
-    min_daily_rate = Decimal(Config.get("BOT", "mindailyrate", None, 0.003, 5)) / 100
-    max_daily_rate = Decimal(Config.get("BOT", "maxdailyrate", None, 0.003, 5)) / 100
+    if exchange == 'BITFINEX':
+        min_daily_rate = Decimal(Config.get("BOT", "mindailyrate", None, 0.003, 7)) / 100
+    else:
+        min_daily_rate = Decimal(Config.get("BOT", "mindailyrate", None, 0.003, 5)) / 100
+    if exchange == 'BITFINEX':
+        max_daily_rate = Decimal(Config.get("BOT", "maxdailyrate", None, 0.003, 7)) / 100
+    else:
+        max_daily_rate = Decimal(Config.get("BOT", "maxdailyrate", None, 0.003, 5)) / 100
     spread_lend = int(Config.get("BOT", "spreadlend", None, 1, 20))
     gap_mode_default = Config.get_gap_mode("BOT", "gapMode")
     gap_bottom_default = Decimal(Config.get("BOT", "gapbottom", None, 0))
