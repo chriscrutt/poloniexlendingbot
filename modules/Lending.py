@@ -40,7 +40,6 @@ gap_mode_default = ""
 scheduler = None
 exchange = None
 
-
 # limit of orders to request
 loanOrdersRequestLimit = {}
 defaultLoanOrdersRequestLimit = 100
